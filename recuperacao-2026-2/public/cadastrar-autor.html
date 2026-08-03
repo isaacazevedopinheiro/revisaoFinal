@@ -117,6 +117,37 @@
 
     function cadastrar() {
 
+      
+        var nomeDigitado = form_postagem.nome.value;
+
+        var proibidos = [
+            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+            '!', '@', '#', '$', '%', '¨', '&', '*', '(', ')', '_', '+', '=', '-',
+            '{', '}', '[', ']', '?', ';', ':', ',', '.', '<', '>', '/', '\\', '|',
+            '"', "'", '`', '^', '~'
+        ];
+
+        var temErro = false;
+
+        // validar cada caractere com o vetor
+        for (var i = 0; i < nomeDigitado.length; i++) {
+            for (var j = 0; j < proibidos.length; j++) {
+                if (nomeDigitado[i] == proibidos[j]) {
+                    temErro = true;
+                    break;
+                }
+            }
+            if (temErro) {
+                break;
+            }
+        }
+
+        if (temErro) {
+            alert("O nome do autor não pode conter números ou caracteres especiais!");
+            return false;
+        }
+        // ACABOU
+
         var corpo = {
             nome: form_postagem.nome.value
         }
@@ -149,6 +180,5 @@
         return false;
 
     }
-
 
 </script>

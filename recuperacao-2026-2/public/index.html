@@ -122,6 +122,8 @@
             var spanPrecoVenda = document.createElement("span");
             var spanAutor = document.createElement("span");
             var spanGenero = document.createElement("span");
+
+            var spanQtdEstoque = document.createElement("span");
             
             var divButtons = document.createElement("div");
             var btnEditar = document.createElement("button");
@@ -134,6 +136,9 @@
             spanAutor.innerHTML = "Autor do Livro: <b>" + item.nomeAutor + "<b>";
             spanGenero.innerHTML = "Gênero: <b>" + item.nomeGenero + "<b>";
 
+              spanQtdEstoque.innerHTML = "Quantidade em Estoque: <b>" + (item.qtdEstoque || item.quantidade || 0) + "</b>";
+          
+
             btnEditar.innerHTML = "Editar";
             btnDeletar.innerHTML = "Deletar";
 
@@ -145,6 +150,7 @@
             spanPrecoVenda.className = "publicacao-precoVenda";
             spanGenero.className = "publicacao-genero";
 
+             spanQtdEstoque.className = "publicacao-qtdEstoque";
             divButtons.className = "div-buttons"
 
             btnEditar.className = "publicacao-btn-editar"
@@ -165,6 +171,8 @@
             divButtons.appendChild(btnEditar);
             divButtons.appendChild(btnDeletar);
             feed.appendChild(divitem);
+            
+            divitem.appendChild(spanQtdEstoque);
           }
 
 

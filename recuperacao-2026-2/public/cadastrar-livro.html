@@ -115,6 +115,11 @@
                                 <input name="precoVenda" id="precoVenda" maxlength="20" type="Text"></input>
                             </label>
 
+                            <label>
+    Quantidade em estoque:
+    <br>
+    <input name="qtdEstoque" id="qtdEstoque" type="number">
+</label>
 
                             <button>Cadastrar</button>
                         </form>
@@ -141,12 +146,45 @@
     }
 
     function cadastrar() {
+
+        var precoCompraVal = Number(form_postagem.precoCompra.value);
+        var precoVendaVal = Number(form_postagem.precoVenda.value);
+        
+        //texto do genero select
+        var selectGenero = document.getElementById("fkGenero_lista");
+        var generoTexto = selectGenero.options[selectGenero.selectedIndex].text.toLowerCase();
+
+        var margemMinima = 0;
+
+
+        if (precoCompraVal >= 100 && (generoTexto == "horror" || generoTexto == "romance")) {
+            margemMinima = 0.225;
+        } 
+
+        else if (precoCompraVal <= 50 && (generoTexto == "poesia" || generoTexto == "horror")) {
+            margemMinima = 0.25;
+        } 
+
+        else if (precoCompraVal > 50 && precoCompraVal < 100 && generoTexto == "fantasia") {
+            margemMinima = 0.275;
+        }
+
+        var precoVendaMinimo = precoCompraVal * (1 + margemMinima);
+
+        if (precoVendaVal < precoVendaMinimo) {
+            alert(`Para este gênero e valor de compra, o preço de venda deve ser no mínimo R$ ${precoVendaMinimo.toFixed(2)} (${margemMinima * 100}% acima do valor de compra).`);
+            return false;
+        }
+
+
+
         var corpo = {
             titulo: form_postagem.titulo.value,
             fkGenero: form_postagem.fkGenero_lista.value,
             fkAutor: form_postagem.fkAutor_lista.value,
             precoCompra: form_postagem.precoCompra.value,
-            precoVenda: form_postagem.precoVenda.value
+            precoVenda: form_postagem.precoVenda.value,
+            qtdEstoque: form_postagem.qtdEstoque.value
         }
 
         fetch(`/livros/cadastrar`, {
